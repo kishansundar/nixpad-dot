@@ -1,0 +1,92 @@
+#!/bin/sh
+# What is playing, for the lock screen (hyprlock.conf runs this):
+#
+#   lock-media text     the track's title with its artist under it, or nothing
+#   lock-media cover    the path of its cover, or of an empty picture
+#   lock-media button previous|toggle|next
+#                       the icon of that button, or nothing
+#   lock-media previous|toggle|next
+#                       does it
+#   lock-media prepare  run just before the screen locks (hypridle.conf):
+#                       writes hyprlock-cover.conf, which tells hyprlock the
+#                       cover to start with, so it is there from the first
+#                       moment and not after the first look for it
+#
+# It tells about the player that is playing, otherwise the first one that is
+# paused; with neither, there is nothing to show.
+#
+# hyprlock runs this a few times a second for as long as the screen is
+# locked, so a call starts as little as it can: playerctl once, awk once.
+
+blank="$HOME/.config/hypr/lock-blank.png"   # one clear pixel
+cache="${XDG_CACHE_HOME:-$HOME/.cache}/lock-media"
+start="$HOME/.config/hypr/hyprlock-cover.conf"
+sep=$(printf '\037')   # between the fields; a character no title has
+
+# That player's state, name, title, artist and cover, asked once. The title
+# and artist are cut to a line's length, and their "&" and "<" written the
+# way markup wants them: hyprlock reads a label as markup.
+IFS=$sep read -r state player title artist art <<EOF
+$(playerctl -a metadata --format "{{status}}$sep{{playerName}}$sep{{title}}$sep{{artist}}$sep{{mpris:artUrl}}" 2>/dev/null | awk -F"$sep" -v OFS="$sep" '
+    function tidy(text) {
+        text = substr(text, 1, 60)
+        gsub(/&/, "\\&amp;", text); gsub(/</, "\\&lt;", text); gsub(/>/, "\\&gt;", text)
+        return text
+    }
+    { $3 = tidy($3); $4 = tidy($4) }
+    $1 == "Playing" { print; found = 1; exit }
+    $1 == "Paused" && !paused { paused = $0 }
+    END { if (!found && paused) print paused }')
+EOF
+
+# The path of the cover. One from the web is fetched once: the address it
+# came from is kept beside it, and it is fetched again only when that
+# changes. $1 is how many seconds the fetching may take.
+cover() {
+    case "$art" in
+        file://*)
+            path=${art#file://}
+            [ -r "$path" ] && echo "$path" || echo "$blank"
+            ;;
+        http*)
+            fetched=""
+            [ -s "$cache/cover.jpg" ] && read -r fetched < "$cache/address"
+            if [ "$fetched" != "$art" ]; then
+                mkdir -p "$cache"
+                curl -fsS -m "$1" -o "$cache/cover.jpg.new" "$art" 2>/dev/null &&
+                    mv "$cache/cover.jpg.new" "$cache/cover.jpg" && printf '%s' "$art" > "$cache/address" && fetched=$art
+            fi
+            [ "$fetched" = "$art" ] && echo "$cache/cover.jpg" || echo "$blank"
+            ;;
+        *) echo "$blank" ;;
+    esac
+}
+
+case "$1" in
+    cover) cover 5 ;;
+    # Locking must not wait: the cover is nearly always fetched already (the
+    # bar does that when the track changes), and a second is the most this
+    # may take when it is not.
+    prepare) printf '$cover = %s\n' "$(cover 1)" > "$start" ;;
+esac
+[ -n "$player" ] || exit 0
+
+case "$1" in
+    # The artist smaller and dimmer, on a line of its own. (A real line break:
+    # hyprlock turns "<br/>" into one only in its own config, not in what a
+    # command prints.)
+    text)
+        printf '<b>%s</b>' "$title"
+        [ -n "$artist" ] && printf '\n<span size="smaller" alpha="70%%">%s</span>' "$artist"
+        ;;
+    button)
+        case "$2" in
+            previous) printf "\363\260\222\256" ;;
+            next) printf "\363\260\222\255" ;;
+            # Pause while it plays, play while it is paused.
+            toggle) [ "$state" = Playing ] && printf "\363\260\217\244" || printf "\363\260\220\212" ;;
+        esac
+        ;;
+    previous | next) playerctl -p "$player" "$1" ;;
+    toggle) playerctl -p "$player" play-pause ;;
+esac

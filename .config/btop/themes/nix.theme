@@ -1,0 +1,53 @@
+# Colours for btop: the fixed palette of ~/.config/quickshell/Theme.qml plus the accent matugen takes from the wallpaper; matugen writes ~/.config/btop/themes/nix.theme from ~/.config/matugen/templates/btop.theme at each wallpaper change, so changes belong in that template
+
+# Text and background (the background only shows when theme_background is on in btop.conf)
+theme[main_bg]="#0B0D1A"
+theme[main_fg]="#F4E8D0"
+theme[title]="#F4E8D0"
+theme[hi_fg]="#ff4da3"
+theme[inactive_fg]="#6E6893"
+theme[graph_text]="#A6A0C8"
+theme[meter_bg]="#292044"
+
+# The selected process: the accent with dark text, like yazi's hover bar
+theme[selected_bg]="#ff4da3"
+theme[selected_fg]="#0B0D1A"
+theme[proc_misc]="#ff4da3"
+
+# Box outlines and the lines inside them
+theme[cpu_box]="#6E6893"
+theme[mem_box]="#6E6893"
+theme[net_box]="#6E6893"
+theme[proc_box]="#6E6893"
+theme[div_line]="#39344F"
+
+# Load meters run from the accent through orange to red as they fill
+theme[cpu_start]="#ff4da3"
+theme[cpu_mid]="#FF9955"
+theme[cpu_end]="#FF5555"
+theme[temp_start]="#ff4da3"
+theme[temp_mid]="#FF9955"
+theme[temp_end]="#FF5555"
+theme[used_start]="#ff4da3"
+theme[used_mid]="#FF9955"
+theme[used_end]="#FF5555"
+theme[process_start]="#ff4da3"
+theme[process_mid]="#FF9955"
+theme[process_end]="#FF5555"
+
+# Free, cached and available memory and network traffic run from lavender to the accent
+theme[free_start]="#A6A0C8"
+theme[free_mid]=""
+theme[free_end]="#ff4da3"
+theme[cached_start]="#A6A0C8"
+theme[cached_mid]=""
+theme[cached_end]="#ff4da3"
+theme[available_start]="#A6A0C8"
+theme[available_mid]=""
+theme[available_end]="#ff4da3"
+theme[download_start]="#A6A0C8"
+theme[download_mid]=""
+theme[download_end]="#ff4da3"
+theme[upload_start]="#A6A0C8"
+theme[upload_mid]=""
+theme[upload_end]="#ff4da3"

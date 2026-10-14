@@ -1,0 +1,71 @@
+# Colours for yazi: the fixed palette of ~/.config/quickshell/Theme.qml plus the accent matugen takes from the wallpaper; matugen writes ~/.config/yazi/theme.toml from ~/.config/matugen/templates/yazi-theme.toml at each wallpaper change, so changes belong in that template
+
+[mgr]
+cwd          = { fg = "{{colors.source_color.default.hex}}" }
+border_style = { fg = "#39344F" }
+
+[tabs]
+active   = { fg = "#0B0D1A", bg = "{{colors.source_color.default.hex}}", bold = true }
+inactive = { fg = "{{colors.source_color.default.hex}}", bg = "#292044" }
+# Square ends, like every other shape on the desktop (yazi's own separators are rounded): here for the tabs, and below for the selected row ([indicator]) and the status bar ([status])
+sep_inner = { open = "█", close = "█" }
+sep_outer = { open = "", close = "" }
+
+[mode]
+normal_main = { fg = "#0B0D1A", bg = "{{colors.source_color.default.hex}}", bold = true }
+normal_alt  = { fg = "{{colors.source_color.default.hex}}", bg = "#292044" }
+select_main = { fg = "black", bg = "yellow", bold = true }
+select_alt  = { fg = "yellow", bg = "#292044" }
+unset_main  = { fg = "black", bg = "red", bold = true }
+unset_alt   = { fg = "red", bg = "#292044" }
+
+[indicator]
+parent  = { fg = "#0B0D1A", bg = "{{colors.source_color.default.hex}}" }
+current = { fg = "#0B0D1A", bg = "{{colors.source_color.default.hex}}" }
+padding = { open = "█", close = "█" }
+
+[status]
+sep_left  = { open = "█", close = "█" }
+sep_right = { open = "█", close = "█" }
+
+[which]
+border = { fg = "{{colors.source_color.default.hex}}" }
+
+[confirm]
+border = { fg = "{{colors.source_color.default.hex}}" }
+title  = { fg = "{{colors.source_color.default.hex}}" }
+
+[spot]
+border  = { fg = "{{colors.source_color.default.hex}}" }
+title   = { fg = "{{colors.source_color.default.hex}}" }
+tbl_col = { fg = "{{colors.source_color.default.hex}}" }
+
+[pick]
+border = { fg = "{{colors.source_color.default.hex}}" }
+
+[input]
+border = { fg = "{{colors.source_color.default.hex}}" }
+
+[cmp]
+border = { fg = "{{colors.source_color.default.hex}}" }
+
+[tasks]
+border = { fg = "{{colors.source_color.default.hex}}" }
+
+[help]
+border = { fg = "{{colors.source_color.default.hex}}" }
+
+# Yazi's own rules with one change: the last line colours folders with the accent, not blue.
+[filetype]
+rules = [
+	{ mime = "**/image/*", fg = "yellow" },
+	{ mime = "**/{audio,video}/*", fg = "magenta" },
+	{ mime = "**/application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "red" },
+	{ mime = "**/application/{pdf,doc,rtf}", fg = "cyan" },
+	{ mime = "vfs/{absent,stale}", fg = "gray" },
+	{ url = "*", is = "orphan", bg = "red" },
+	{ url = "*", is = "exec", fg = "green" },
+	{ url = "*", is = "dummy", bg = "red" },
+	{ url = "*/", is = "dummy", bg = "red" },
+	{ url = "*/", fg = "{{colors.source_color.default.hex}}" },
+]

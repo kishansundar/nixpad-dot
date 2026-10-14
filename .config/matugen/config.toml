@@ -1,0 +1,39 @@
+# matugen writes one colour, the accent, into the templates, which keep every other colour fixed. ~/.config/mango/wallpaper.sh works that colour out from the wallpaper (its hue, kept between cyan and magenta) and hands it to matugen.
+[config]
+prefer = "saturation"
+
+[templates.mango]
+input_path = "~/.config/matugen/templates/mango-colors.conf"
+output_path = "~/.config/mango/colors.conf"
+post_hook = "mmsg dispatch reload_config || true"
+
+[templates.kitty]
+input_path = "~/.config/matugen/templates/kitty-accent.conf"
+output_path = "~/.config/kitty/accent.conf"
+post_hook = "pkill -SIGUSR1 kitty || true"
+
+[templates.screensaver]
+input_path = "~/.config/matugen/templates/kitty-screensaver.conf"
+output_path = "~/.config/kitty/screensaver.conf"
+
+[templates.hyprlock]
+input_path = "~/.config/matugen/templates/hyprlock-colors.conf"
+output_path = "~/.config/hypr/hyprlock-colors.conf"
+
+[templates.gtk3]
+input_path = "~/.config/matugen/templates/gtk-colors.css"
+output_path = "~/.config/gtk-3.0/gtk.css"
+# The service that draws file dialogs reads these colors only when it starts, so it is restarted.
+post_hook = "systemctl --user restart xdg-desktop-portal-gtk.service || true"
+
+[templates.gtk4]
+input_path = "~/.config/matugen/templates/gtk-colors.css"
+output_path = "~/.config/gtk-4.0/gtk.css"
+
+[templates.yazi]
+input_path = "~/.config/matugen/templates/yazi-theme.toml"
+output_path = "~/.config/yazi/theme.toml"
+
+[templates.btop]
+input_path = "~/.config/matugen/templates/btop.theme"
+output_path = "~/.config/btop/themes/nix.theme"

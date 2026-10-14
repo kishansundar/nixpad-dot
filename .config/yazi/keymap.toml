@@ -1,0 +1,5 @@
+# Enter goes into a folder and opens a file (yazi's own Enter opens a folder in the editor); the plugin is yazi's official smart-enter, listed in package.toml
+[[mgr.prepend_keymap]]
+on = "<Enter>"
+run = "plugin smart-enter"
+desc = "Enter the folder, or open the file"
