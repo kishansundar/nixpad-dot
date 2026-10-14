@@ -18,7 +18,7 @@ where they belong in the home folder. The `dot` command (a fish abbreviation) is
 | `dot add -u` | stage every change to files already in the repo |
 | `dot commit -m "what changed"` | save the staged changes |
 | `dot add PATH` | start tracking a new file |
-| `dot add -A ~/.config/mango` | after a wallpaper change: stage the new picture |
+| `dot add -u && dot add -A ~/.config/mango` | after a wallpaper change: stage the new picture and the colours made from it |
 | `dot log --oneline` | the list of saves |
 
 > **Never run `dot add -A` or `dot add .` without naming a folder.**
