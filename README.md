@@ -40,9 +40,12 @@ them up again (see "After the first login").
 
 A copy only on this laptop is lost with the laptop.
 
-- USB drive: `git clone --bare ~/.dotfiles /run/media/kishan/<drive>/dotfiles.git`
+- GitHub (public): https://github.com/kishansundar/nixpad-dotfiles is the remote
+  `origin`. After each commit, `dot push` sends it there. Commits use GitHub's
+  hidden address (`2255726+kishansundar@users.noreply.github.com`), never the
+  real email.
+- USB drive, as a second copy: `git clone --bare ~/.dotfiles /run/media/kishan/<drive>/dotfiles.git`
   (update it later with `dot push /run/media/kishan/<drive>/dotfiles.git main`)
-- GitHub (private repo): `dot remote add origin git@github.com:<user>/<repo>.git`, then `dot push -u origin main`
 
 ## Fresh install
 
@@ -56,7 +59,7 @@ A copy only on this laptop is lost with the laptop.
    `nix-shell -p git`
 3. Clone the repo and make the `dot` command for this shell:
    ```sh
-   git clone --bare <USB path or GitHub URL> ~/.dotfiles
+   git clone --bare https://github.com/kishansundar/nixpad-dotfiles.git ~/.dotfiles
    alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
    dot config status.showUntrackedFiles no
    ```
@@ -91,7 +94,7 @@ A copy only on this laptop is lost with the laptop.
 | RustDesk | gets a new ID |
 | Doom Emacs | `git clone --depth 1 https://github.com/doomemacs/core ~/.config/emacs && ~/.config/emacs/bin/doom install` |
 | Neovim | plugins install by themselves on the first start |
-| SSH | restore `~/.ssh` from a backup, or make a new key |
+| SSH | restore `~/.ssh` from a backup, or make a new key and add it to GitHub; then `dot remote set-url origin git@github.com:kishansundar/nixpad-dotfiles.git` so `dot push` works again (an HTTPS clone can only download) |
 | Wallpapers | only the one in use is here; copy `~/Pictures/Backgrounds` back for the rest |
 
 ## Handy commands
