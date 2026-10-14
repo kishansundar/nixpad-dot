@@ -22,9 +22,11 @@ where they belong in the home folder. The `dot` command (a fish abbreviation) is
 | `dot log --oneline` | the list of saves |
 | `dotg` | the same repo in lazygit (it needs both folders named, which `dotg` does) |
 
-> **Never run `dot add -A` or `dot add .` without naming a folder.**
-> The working folder of this repo is the whole home folder, so that would add
-> SSH keys, browser profiles and everything else.
+> **The working folder of this repo is the whole home folder.** `~/.gitignore`
+> ignores everything except the configs kept here, so "stage all" (`dot add -A`,
+> or `a` in lazygit) cannot pick up SSH keys, browser profiles or other private
+> files. To track a *new* app's config, first add a `!` line for it to
+> `~/.gitignore` (for example `!/.config/newapp/`), then `dot add` it.
 
 ## What is not in here
 
