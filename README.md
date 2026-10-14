@@ -20,6 +20,7 @@ where they belong in the home folder. The `dot` command (a fish abbreviation) is
 | `dot add PATH` | start tracking a new file |
 | `dot add -u && dot add -A ~/.config/mango` | after a wallpaper change: stage the new picture and the colours made from it |
 | `dot log --oneline` | the list of saves |
+| `dotg` | the same repo in lazygit (it needs both folders named, which `dotg` does) |
 
 > **Never run `dot add -A` or `dot add .` without naming a folder.**
 > The working folder of this repo is the whole home folder, so that would add

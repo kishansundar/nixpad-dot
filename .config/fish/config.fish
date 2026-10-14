@@ -93,6 +93,7 @@ if status is-interactive
 
     # dot: git for the config repo in ~/.dotfiles, whose files stay where they are in the home folder.
     abbr --add dot 'git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+    abbr --add dotg 'lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
     # --------------------------------------------------------
     # NixOS
