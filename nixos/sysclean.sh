@@ -43,8 +43,6 @@ echo "== Downloads: over 30 days old or over 200 MB (never removed here, look fo
 find "$HOME/Downloads" -type f \( -mtime +30 -o -size +200M \) -printf '%s\t%TY-%Tm-%Td\t%p\n' 2>/dev/null | numfmt -d "$(printf '\t')" --field=1 --to=iec
 
 if [ "$go" ]; then
-    echo "== Nix store: identical files linked together (takes a few minutes)"
-    nix-store --optimise
     echo "== Freed: $(( (before - $(used)) / 1048576 )) MB"
 else
     echo "== Nothing was changed. Run \"sysclean go\" to do it."

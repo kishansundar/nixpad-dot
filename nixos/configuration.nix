@@ -49,6 +49,8 @@
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Identical files in the store are linked together as each package arrives, so a running program's file is never replaced later.
+  nix.settings.auto-optimise-store = true;
 
   # Software that is not open source is blocked unless it is named here.
   nixpkgs.config.allowUnfreePredicate = pkg:

@@ -11,6 +11,8 @@
   systemd.services.rustdesk = {
     wantedBy = [ "multi-user.target" ];
     after = [ "systemd-user-sessions.service" ];
+    # A switch does not restart it: its ExecStop kills every "rustdesk --" process, so a rebuild run over RustDesk would cut itself off.
+    restartIfChanged = false;
     path = [ pkgs.procps pkgs.gawk pkgs.which pkgs.getent "/run/wrappers" ];
     serviceConfig = {
       ExecStart = "${pkgs.rustdesk-flutter}/bin/rustdesk --service";
@@ -27,12 +29,24 @@
     (final: prev: {
       # RustDesk with its Wayland shortcut capture: nixpkgs builds it without the two Wayland tools the feature needs.
       rustdesk-flutter = prev.rustdesk-flutter.overrideAttrs (old: {
-        nativeBuildInputs = old.nativeBuildInputs ++ [ prev.wayland-scanner ];
+        nativeBuildInputs = old.nativeBuildInputs ++ [ prev.wayland-scanner prev.removeReferencesTo ];
         buildInputs = old.buildInputs ++ [ prev.wayland prev.wayland-protocols prev.wayland-scanner ];
+        # The root service re-checks the session every 0.5 s (half a core); 30 s is enough, a login or logout is noticed within 30 s.
+        postPatch = old.postPatch + ''
+          substituteInPlace ../src/platform/linux.rs --replace-fail 'sleep_millis(500);' 'sleep_millis(30_000);'
+          # A failed screen capture (screen off) no longer leaves the "already set up" mark on, so the next connection tries again.
+          substituteInPlace ../src/server/wayland.rs --replace-fail 'Capturer::new(display).with_context(|| {' 'Capturer::new(display).map_err(|e| { *PIPEWIRE_INITIALIZED.write().unwrap() = false; e }).with_context(|| {'
+        '';
+        # librustdesk.so names rustc's folder without loading anything from it, which kept rustc and LLVM (1.7 GB) installed; drop it.
+        postFixup = (old.postFixup or "") + ''
+          find $out -type f -exec remove-references-to -t ${prev.rustc.unwrapped} {} +
+        '';
+        disallowedReferences = (old.disallowedReferences or [ ]) ++ [ prev.rustc.unwrapped ];
       });
       # Screen-sharing portal with the upstream fix for its crash when RustDesk starts a stream (xdg-desktop-portal-wlr PR #405).
+      # Only for 0.8.4 and older: a newer release should carry the fix and the patch would no longer apply.
       xdg-desktop-portal-wlr = prev.xdg-desktop-portal-wlr.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [ ./xdpw-stale-frame.patch ];
+        patches = (old.patches or [ ]) ++ prev.lib.optionals (prev.lib.versionOlder old.version "0.8.5") [ ./xdpw-stale-frame.patch ];
       });
     })
   ];
