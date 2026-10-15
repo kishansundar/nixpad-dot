@@ -3,9 +3,11 @@
 
 palette = "wallpaper"
 add_newline = false
-continuation_prompt = "[▸▹ ](dimmed white)"
+continuation_prompt = "[▸▹ ](white)"
 
 format = """($container$git_metrics\n)$cmd_duration\
+${env_var.SSH_CONNECTION}\
+$username\
 $hostname\
 $localip\
 $shlvl\
@@ -13,7 +15,6 @@ $shell\
 $env_var\
 $jobs\
 $sudo\
-$username\
 $character"""
 
 right_format = """
@@ -94,23 +95,26 @@ $os\
 $battery\
 $time"""
 
-# Accents: kitty slots set in ~/.config/kitty/colors.conf
+# Accents: kitty's ANSI slots, so each machine's kitty theme sets them (bright-white = text, white = mid grey).
 [palettes.wallpaper]
-primary   = "254"
-secondary = "252"
-tertiary  = "250"
-error     = "248"
-surface_high = "247"
+primary   = "bright-white"
+secondary = "bright-white"
+tertiary  = "white"
+error     = "white"
+surface_high = "bright-black"
 
 [character]
 format = "$symbol "
 success_symbol = "[◎](bold italic primary)"
 error_symbol = "[○](italic error)"
-vimcmd_symbol = "[■](italic dimmed green)"
+vimcmd_symbol = "[■](italic green)"
 # not supported in zsh
 vimcmd_replace_one_symbol = "◌"
 vimcmd_replace_symbol = "□"
 vimcmd_visual_symbol = "▼"
+
+[env_var.SSH_CONNECTION]
+format = "[󰣀 ](bold green)"
 
 [env_var.VIMSHELL]
 format = "[$env_value]($style)"
@@ -125,7 +129,7 @@ disabled = false
 [username]
 style_user = "primary bold italic"
 style_root = "error bold italic"
-format = "[⭘ $user]($style) "
+format = "[$user]($style)"
 disabled = false
 show_always = false
 
@@ -150,7 +154,7 @@ symbol = "[▶](blue italic)"
 
 [localip]
 ssh_only = true
-format = " ◯[$localipv4](bold magenta)"
+format = "[󰩟 $localipv4](bold purple) "
 disabled = false
 
 [time]
@@ -158,7 +162,7 @@ disabled = false
 format = "[ $time]($style)"
 time_format = "%R"
 utc_time_offset = "local"
-style = "italic dimmed white"
+style = "italic white"
 
 [battery]
 format = "[ $percentage $symbol]($style)"
@@ -174,11 +178,11 @@ style = "italic bold red"
 
 [[battery.display]]
 threshold = 60
-style = "italic dimmed bright-purple"
+style = "italic bright-purple"
 
 [[battery.display]]
 threshold = 70
-style = "italic dimmed yellow"
+style = "italic yellow"
 
 [git_branch]
 format = " [$branch(:$remote_branch)]($style)"
@@ -190,18 +194,18 @@ only_attached = true
 
 [git_metrics]
 format = '([▴$added]($added_style))([▿$deleted]($deleted_style))'
-added_style = 'italic dimmed green'
-deleted_style = 'italic dimmed red'
+added_style = 'italic green'
+deleted_style = 'italic red'
 ignore_submodules = true
 disabled = false
 
 [git_status]
 style = "bold italic secondary"
 format = "([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"
-conflicted = "[◪◦](italic bright-magenta)"
+conflicted = "[◪◦](italic bright-purple)"
 ahead = "[▴│[${count}](bold white)│](italic green)"
 behind = "[▿│[${count}](bold white)│](italic red)"
-diverged = "[◇ ▴┤[${ahead_count}](regular white)│▿┤[${behind_count}](regular white)│](italic bright-magenta)"
+diverged = "[◇ ▴┤[${ahead_count}](regular white)│▿┤[${behind_count}](regular white)│](italic bright-purple)"
 untracked = "[◌◦](italic bright-yellow)"
 stashed = "[◃◈](italic white)"
 modified = "[●◦](italic yellow)"
@@ -249,10 +253,10 @@ version_format = "${raw}"
 style = "bold red"
 
 [package]
-format = " [pkg](italic dimmed) [$symbol$version]($style)"
+format = " [pkg](italic) [$symbol$version]($style)"
 version_format = "${raw}"
 symbol = "󰏗 "
-style = "dimmed yellow italic bold"
+style = "yellow italic bold"
 
 [swift]
 format = " [sw](italic) [${symbol}${version}]($style)"
@@ -312,6 +316,7 @@ format = " hs [$symbol($version )]($style)"
 
 [java]
 symbol = " "
+style = "red"
 format = " java [${symbol}(${version} )]($style)"
 
 [julia]
@@ -320,6 +325,7 @@ format = " jl [$symbol($version )]($style)"
 
 [memory_usage]
 symbol = "󰍛 "
+style = "white bold"
 format = " mem [${ram}( ${swap})]($style)"
 
 [nim]
@@ -339,3 +345,17 @@ format = " [  $output]($style)"
 [spack]
 symbol = " "
 format = " spack [$symbol$environment]($style)"
+
+# Starship's own styles for these are "dimmed", which kitty draws at 40 %, too faint to read.
+[hostname]
+format = "[@$hostname]($style) "
+style = "green bold"
+
+[container]
+style = "red bold"
+
+[netns]
+style = "blue bold"
+
+[singularity]
+style = "blue bold"
