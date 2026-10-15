@@ -5,6 +5,7 @@
         "org.gnome.Nautilus",
         "spotify",
         "md.obsidian.Obsidian",
-        "dev.zed.Zed"
+        "dev.zed.Zed",
+        "rustdesk"
     ]
 }
