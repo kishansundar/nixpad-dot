@@ -1,41 +1,103 @@
 {
-  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-
-  // A close-up of glowing anime eyes (wallpaper wallhaven-o3km89), drawn by fastfetch from portrait.png in braille dots in the picture's own colours, 15 rows high from the name line to Colors, with one empty row above.
-  "logo": {
-    "type": "chafa",
-    "source": "~/.config/fastfetch/portrait.png",
-    "width": 36,
-    "height": 15,
-    "padding": { "top": 1, "left": 2, "right": 3 },
-    "chafa": { "symbols": "braille", "fgOnly": true, "canvasMode": "TRUECOLOR" }
-  },
-
-  // Labels and the name line in the accent; a grey bar between each label and its value.
-  "display": {
-    "separator": "│ ",
-    "color": { "keys": "@254", "title": "@254", "separator": "90" }
-  },
-
-  // Each key is written by hand: the icon in the normal text colour ({#39}), the label in the accent ({#keys}), filled with spaces so the bars line up.
-  // The values are kept short: a half-screen terminal on the laptop is 85 letters wide, which leaves 31 for a value before it wraps through the logo.
-  "modules": [
-    // An empty first line, the info's half of the empty row above the picture.
-    { "type": "break" },
-    { "type": "title", "format": "{user-name-colored}{at-symbol-colored}{host-name-colored} {cwd}" },
-    { "type": "os", "key": "{#39}{#keys}  System   ", "format": "{pretty-name}" },
-    { "type": "host", "key": "{#39}{#keys}  Host     ", "format": "{family}" },
-    { "type": "kernel", "key": "{#39}{#keys}  Kernel   ", "format": "{sysname} {release} ({arch})" },
-    { "type": "cpu", "key": "{#39}{#keys}  CPU      ", "format": "{name}" },
-    { "type": "cpu", "key": "{#39}󰘚{#keys}  Topology ", "format": "{cores-physical} cores, {cores-logical} threads @ {freq-max}" },
-    { "type": "shell", "key": "{#39}{#keys}  Shell    ", "format": "{pretty-name}" },
-    { "type": "terminal", "key": "{#39}{#keys}  Terminal ", "format": "{pretty-name}" },
-    { "type": "uptime", "key": "{#39}{#keys}  Uptime   " },
-    { "type": "wm", "key": "{#39}{#keys}  Desktop  ", "format": "{pretty-name} ({protocol-name})" },
-    { "type": "display", "key": "{#39}{#keys}  Display  ", "format": "{width}x{height} @ {refresh-rate} Hz" },
-    { "type": "memory", "key": "{#39}{#keys}  Memory   " },
-    { "type": "disk", "key": "{#39}{#keys}  Storage  ", "format": "{size-used} / {size-total} ({size-percentage})" },
-    { "type": "battery", "key": "{#39}{#keys}  Battery  ", "format": "{capacity} [{status}]" },
-    { "type": "custom", "key": "{#39}{#keys}  Colors   ", "format": "{#34}●  {#36}●  {#32}●  {#33}●  {#31}●  {#35}●" }
-  ]
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    // Layout from the Archppuccin config (r/unixporn, neuromask/catppuccin-linux-theme); the logo is the NixOS snowflake in portrait.png, drawn in braille dots.
+    "logo": {
+        "type": "chafa",
+        "source": "~/.config/fastfetch/portrait.png",
+        "width": 39,
+        "height": 16,
+        "padding": { "top": 1, "left": 2, "right": 2 },
+        "chafa": { "symbols": "braille", "fgOnly": true, "canvasMode": "TRUECOLOR" }
+    },
+    "modules": [
+        "break",
+        {
+            "type": "custom",
+            "format": "┌─────────────── Hardware ───────────────┐",
+            "outputColor": "red"
+        },
+        {
+            "type": "title",
+            "key": " PC",
+            "keyColor": "green"
+        },
+        {
+            "type": "cpu",
+            "key": "│ ├ CPU",
+            "showPeCoreCount": true,
+            "format": "{1}",
+            "keyColor": "green"
+        },
+        {
+            "type": "gpu",
+            "key": "│ ├󰢮 GPU",
+            "format": "{vendor} {name~0,11} [{type}]",
+            "keyColor": "green"
+        },
+        {
+            "type": "memory",
+            "key": "│ ├󰍛 Memory",
+            "keyColor": "green"
+        },
+        {
+            "type": "disk",
+            "key": "└ └󰋊 Disk",
+            "folders": "/",
+            "format": "{size-used} / {size-total} ({size-percentage})",
+            "keyColor": "green"
+        },
+        {
+            "type": "custom",
+            "format": "└────────────────────────────────────────┘",
+            "outputColor": "red"
+        },
+        "break",
+        {
+            "type": "custom",
+            "format": "┌─────────────── Software ───────────────┐",
+            "outputColor": "red"
+        },
+        {
+            "type": "os",
+            "key": " OS",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "kernel",
+            "key": "│ ├ Kernel",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "command",
+            "key": "│ ├ Generation",
+            "keyColor": "yellow",
+            "text": "readlink /nix/var/nix/profiles/system | tr -dc 0-9"
+        },
+        {
+            "type": "shell",
+            "key": "│ ├ Shell",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "command",
+            "key": "│ ├ OS Age",
+            "keyColor": "yellow",
+            "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
+        },
+        {
+            "type": "uptime",
+            "key": "└ └ Uptime",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "custom",
+            "format": "└────────────────────────────────────────┘",
+            "outputColor": "red"
+        },
+        {
+            "type": "custom",
+            "format": "         \u001b[90m  \u001b[31m  \u001b[32m  \u001b[33m  \u001b[34m  \u001b[35m  \u001b[36m  \u001b[37m "
+        },
+        "break",
+    ]
 }
