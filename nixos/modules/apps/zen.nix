@@ -24,7 +24,7 @@ let
     }:
 
     let
-      version = "1.23.2b";
+      version = "1.23.3b";
 
       # Zen's own updater can't work in the Nix store; change version and hash to update.
       policiesJson = writeText "zen-policies.json" (
@@ -39,7 +39,7 @@ let
         # Official build; ../../update-browsers.sh writes the newest version and hash.
         src = fetchurl {
           url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.linux-x86_64.tar.xz";
-          hash = "sha256-Xmf0+ggbG0NyQ8RkRJ6hvSo7Fbb5Mkh6iqDCWqhRRgA=";
+          hash = "sha256-uyBF0+IWVNQP6EElAJLurf0sH8gx7vtQkiJ3PIvcoUk=";
         };
 
         nativeBuildInputs = [

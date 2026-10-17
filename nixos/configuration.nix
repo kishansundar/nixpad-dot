@@ -25,7 +25,6 @@
   services.tailscale.enable = true;
   # Lets kishan start and stop Tailscale without sudo (the dashboard's TAILSCALE switch)
   services.tailscale.extraSetFlags = [ "--operator=kishan" ];
-  networking.enableIPv6 = false;
   time.timeZone = "Asia/Kolkata";
 
   i18n.defaultLocale = "en_US.UTF-8";
