@@ -1,103 +1,35 @@
 {
     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-    // Layout from the Archppuccin config (r/unixporn, neuromask/catppuccin-linux-theme); the logo is the NixOS snowflake in portrait.png, drawn in braille dots.
+    // The bar's NIX//OS in figlet's slant font (nixos.txt), then the dashboard as a terminal panel: name plate, Japanese word, tape stripes, numbered sections, deck meters; colours are kitty's slots (254 the wallpaper accent, 252 cream, 250 lavender, 247 empty segment, 8 muted).
     "logo": {
-        "type": "chafa",
-        "source": "~/.config/fastfetch/portrait.png",
-        "width": 39,
-        "height": 16,
-        "padding": { "top": 1, "left": 2, "right": 2 },
-        "chafa": { "symbols": "braille", "fgOnly": true, "canvasMode": "TRUECOLOR" }
+        "type": "file",
+        "source": "~/.config/fastfetch/nixos.txt",
+        "position": "top",
+        "padding": { "top": 1, "left": 0 },
+        "color": { "1": "@252", "2": "@254" }
+    },
+    "display": {
+        "separator": " ",
+        "brightColor": false,
+        "color": { "keys": "@250", "output": "@252", "separator": "@8", "title": "@254" },
+        // Meters like the dashboard's: 20 thin segments, second colour to 60 %, orange to 85 %, the accent above (thresholds in each module)
+        "bar": { "width": 20, "char": { "elapsed": "▖", "total": "▖" }, "border": null, "color": { "total": "@247" } },
+        "percent": { "type": 2, "color": { "green": "magenta", "yellow": "yellow", "red": "@254" } },
+        "size": { "ndigits": 1 }
     },
     "modules": [
+        // Panel head: the host on an accent plate in dark ink, システム in the second colour, the three tape stripes, the user
+        { "type": "title", "format": "{#38;2;11;13;26;48;5;254}  {host-name}  {#} {#magenta}システム{#}  {#@254}━━━━━━━━━{#yellow}━━━━━━━━━{#magenta}━━━━━━━━━{#}  {#@250}{user-name}" },
         "break",
-        {
-            "type": "custom",
-            "format": "┌─────────────── Hardware ───────────────┐",
-            "outputColor": "red"
-        },
-        {
-            "type": "title",
-            "key": " PC",
-            "keyColor": "green"
-        },
-        {
-            "type": "cpu",
-            "key": "│ ├ CPU",
-            "showPeCoreCount": true,
-            "format": "{1}",
-            "keyColor": "green"
-        },
-        {
-            "type": "gpu",
-            "key": "│ ├󰢮 GPU",
-            "format": "{vendor} {name~0,11} [{type}]",
-            "keyColor": "green"
-        },
-        {
-            "type": "memory",
-            "key": "│ ├󰍛 Memory",
-            "keyColor": "green"
-        },
-        {
-            "type": "disk",
-            "key": "└ └󰋊 Disk",
-            "folders": "/",
-            "format": "{size-used} / {size-total} ({size-percentage})",
-            "keyColor": "green"
-        },
-        {
-            "type": "custom",
-            "format": "└────────────────────────────────────────┘",
-            "outputColor": "red"
-        },
+        { "type": "custom", "format": "{#@8}01 / SYSTEM" },
+        { "type": "command", "key": "SYSTEM ", "text": ". /etc/os-release; printf \"%s %s  ·  GEN %s\" \"$NAME\" \"$VERSION_ID\" \"$(readlink /nix/var/nix/profiles/system | tr -dc 0-9)\"" },
+        { "type": "kernel", "key": "KERNEL ", "format": "{sysname} {release}" },
+        { "type": "uptime", "key": "UPTIME ", "format": "{days}D {hours}H {minutes}M" },
         "break",
-        {
-            "type": "custom",
-            "format": "┌─────────────── Software ───────────────┐",
-            "outputColor": "red"
-        },
-        {
-            "type": "os",
-            "key": " OS",
-            "keyColor": "yellow"
-        },
-        {
-            "type": "kernel",
-            "key": "│ ├ Kernel",
-            "keyColor": "yellow"
-        },
-        {
-            "type": "command",
-            "key": "│ ├ Generation",
-            "keyColor": "yellow",
-            "text": "readlink /nix/var/nix/profiles/system | tr -dc 0-9"
-        },
-        {
-            "type": "shell",
-            "key": "│ ├ Shell",
-            "keyColor": "yellow"
-        },
-        {
-            "type": "command",
-            "key": "│ ├ OS Age",
-            "keyColor": "yellow",
-            "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
-        },
-        {
-            "type": "uptime",
-            "key": "└ └ Uptime",
-            "keyColor": "yellow"
-        },
-        {
-            "type": "custom",
-            "format": "└────────────────────────────────────────┘",
-            "outputColor": "red"
-        },
-        {
-            "type": "custom",
-            "format": "         \u001b[90m  \u001b[31m  \u001b[32m  \u001b[33m  \u001b[34m  \u001b[35m  \u001b[36m  \u001b[37m "
-        },
-        "break",
+        { "type": "custom", "format": "{#@8}02 / LOAD" },
+        { "type": "cpu", "key": "CPU    ", "format": "{name}  ·  {cores-physical} / {cores-logical}" },
+        { "type": "memory", "key": "MEMORY ", "percent": { "green": 60, "yellow": 85 }, "format": "{percentage-bar} {#@252}{used} / {total}" },
+        { "type": "disk", "key": "DISK   ", "folders": "/", "percent": { "green": 60, "yellow": 85 }, "format": "{size-percentage-bar} {#@252}{size-used} / {size-total}" },
+        "break"
     ]
 }
