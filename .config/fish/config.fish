@@ -26,9 +26,6 @@ fish_add_path -g ~/.local/bin
 # Rust/Cargo binaries, if present
 fish_add_path -g ~/.cargo/bin
 
-# Doom Emacs command
-fish_add_path -g ~/.config/emacs/bin
-
 # Pager
 set -gx PAGER less
 set -gx LESS '-R -F -X'

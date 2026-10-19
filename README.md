@@ -92,7 +92,6 @@ A copy only on this laptop is lost with the laptop.
 | Helium | sign in and add extensions |
 | Syncthing | open http://127.0.0.1:8384, add the other devices and the Obsidian Vault folder again (the laptop gets a new device ID) |
 | RustDesk | gets a new ID |
-| Doom Emacs | `git clone --depth 1 https://github.com/doomemacs/core ~/.config/emacs && ~/.config/emacs/bin/doom install` |
 | Neovim | plugins install by themselves on the first start |
 | SSH | restore `~/.ssh` from a backup, or make a new key and add it to GitHub; then `dot remote set-url origin git@github.com:kishansundar/nixpad-dot.git` so `dot push` works again (an HTTPS clone can only download) |
 | Wallpapers | only the one in use is here; copy `~/Pictures/Backgrounds` back for the rest |

@@ -23,7 +23,6 @@
 !/.config/gtk-4.0/
 !/.config/xdg-desktop-portal-wlr/
 !/.config/nvim/
-!/.config/doom/
 !/.config/zed/
 !/.config/starship.toml
 !/.config/mimeapps.list

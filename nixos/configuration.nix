@@ -59,7 +59,6 @@
       "unrar"
       "spotify"
       "obsidian"
-      "symbola"
     ];
 
   # The NixOS release first installed; it stays the same across upgrades.

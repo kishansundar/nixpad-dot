@@ -44,8 +44,6 @@ in
     # Terminal, code, and the bar and its panels; the Nerd Font build adds icon glyphs.
     pkgs.nerd-fonts.jetbrains-mono
     pkgs.nerd-fonts.symbols-only
-    # Last-resort symbol font for Emacs (not open source; allowed by name in configuration.nix).
-    pkgs.symbola
 
     # Text in app windows and menus. Only the Sans family of IBM Plex.
     (pkgs.ibm-plex.override { families = [ "sans" ]; })
