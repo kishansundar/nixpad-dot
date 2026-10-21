@@ -29,6 +29,7 @@ PanelWindow {
                 if (text !== displays.heard) { try { displays.outputs = JSON.parse(text); displays.heard = text } catch (e) {} }
                 if (displays.settling && !settle.running) { displays.settling = false; displays.edits = ({}); displays.chosen = displays.live }
                 if (!displays.piece && displays.row === 0) displays.row = 1
+                if (displays.arriving) { displays.arriving = false; displays.below() }
             }
         }
     }
@@ -191,6 +192,19 @@ PanelWindow {
     function write(text) { settling = true; rules.setText(text); conf = text; settle.restart() }
     function back() { keeping = false; write(before) }
     Timer { interval: 1000; repeat: true; running: displays.keeping; onTriggered: { displays.left -= 1; if (displays.left <= 0) displays.back() } }
+    // Always below: when one external screen is connected (at the start, or when one is plugged in) the laptop goes centred under it, whatever its size; Super+P still arranges them otherwise until the next plug-in, and the lid does not count
+    readonly property string externals: Quickshell.screens.filter(s => !/^eDP/.test(s.name)).map(s => s.name).join(" ")
+    onExternalsChanged: arrive.restart()
+    Component.onCompleted: arrive.restart()
+    property bool arriving: false
+    Timer { id: arrive; interval: 1500; onTriggered: { displays.arriving = true; ask.running = true } }
+    function below() {
+        const outside = screens.filter(s => !s.laptop), laptop = screens.find(s => s.laptop)
+        if (visible || keeping || settling || outside.length !== 1 || !laptop || !rules.loaded) return
+        const at = offset(7, room(outside[0]), room(laptop)), edge = Math.max(0, -at.x)
+        const text = written(written(rules.text(), outside[0].name, { x: edge, y: 0 }), laptop.name, { x: edge + at.x, y: at.y })
+        if (text !== rules.text()) write(text)
+    }
     onVisibleChanged: {
         if (visible) { edits = ({}); chosen = live; shown = 0; row = 0; keys.forceActiveFocus() }
         else if (keeping) back()
