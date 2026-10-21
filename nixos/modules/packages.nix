@@ -12,6 +12,6 @@
     qimgv
     obsidian
     smassh              # typing test in the terminal
-    rustdesk-flutter    # remote desktop, same version as NixDesk
+    rustdesk-flutter    # remote desktop, same version as Kratos
   ];
 }
