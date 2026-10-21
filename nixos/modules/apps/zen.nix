@@ -103,7 +103,7 @@ let
         };
       };
     in
-    # Adds launcher, icons and media libraries; the wrapper is shown the Gecko version (158, MaxVersion in the build's application.ini; check it at each Zen update).
+    # Adds launcher, icons and media libraries; the wrapper is shown the Gecko version (MaxVersion in the build's application.ini), which ../../update-packages.sh writes with each new Zen.
     wrapFirefox (unwrapped // { version = "158.0"; }) { inherit version; }
   ) { };
 in
