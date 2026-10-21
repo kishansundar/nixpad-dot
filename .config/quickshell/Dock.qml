@@ -67,8 +67,8 @@ Scope {
         }
         return list.filter(a => a.entry || a.windows.length > 0)
     }
-    // An app that needs a terminal is started inside kitty
-    function launch(entry) { if (entry.runInTerminal) Quickshell.execDetached(["kitty", ...entry.command]); else entry.execute() }
+    // Started through Sys.launch: its output in the journal, a notice if it fails to start, a terminal app inside kitty
+    function launch(entry) { Sys.launch(entry) }
     // A click starts an app that has no window; with windows it shows the next one after the one in use (the first when none of them is): mango is asked for its window list, because only mango can show a window that is on another tag
     property var wanted: []
     function use(app) {

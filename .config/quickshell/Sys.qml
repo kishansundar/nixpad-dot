@@ -256,6 +256,15 @@ Singleton {
     readonly property color stateColor: temp >= 90 || (low && charge <= 15) ? Theme.error : hot || low ? Theme.warn : awake ? Theme.info : night ? Theme.night : Theme.accent
     readonly property string stateText: [hot ? "CPU AT " + temp + "°C" : "", low ? "BATTERY AT " + charge + "%" : "", awake ? "CAFFEINE ON" : "", night ? "NIGHT LIGHT ON" : ""].filter(s => s).join("  /  ") || "ALL NOMINAL"
 
+    // --- Apps ---
+
+    // The launcher's and the dock's one way to start an app: through launch.sh, so its output goes to the journal (journalctl -t ID) and a start that fails says so; one that needs a terminal inside kitty; in the entry's own folder, as execute() does
+    function launch(entry) {
+        const id = String(entry.startupClass || entry.id || "app").replace(/\.desktop$/, "")
+        const command = [Quickshell.shellDir + "/launch.sh", id, entry.name || id].concat(entry.runInTerminal ? ["kitty", ...entry.command] : entry.command)
+        Quickshell.execDetached({ command: command, workingDirectory: entry.workingDirectory })
+    }
+
     // --- Notifications ---
 
     // The shell's own messages (a failed Wi-Fi join or Bluetooth pairing) go out as desktop notifications over D-Bus like any app's; Notify.qml receives and shows them

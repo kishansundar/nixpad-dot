@@ -37,10 +37,10 @@ PanelWindow {
     readonly property var shown: found.slice(0, 8)
     onVisibleChanged: if (visible) { query = ""; chosen = 0; input.clear(); input.forceActiveFocus() }
 
-    // An app that needs a terminal is started inside kitty
+    // Started through Sys.launch: its output in the journal, a notice if it fails to start, a terminal app inside kitty
     function launch(app) {
         Panels.close()
-        if (app.runInTerminal) Quickshell.execDetached(["kitty", ...app.command]); else app.execute()
+        Sys.launch(app)
     }
     // A name in capitals with the typed letters in the accent, where the name holds them (the signs & and < are written out so a name cannot be read as markup)
     function marked(name) {
