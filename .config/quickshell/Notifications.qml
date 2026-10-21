@@ -8,7 +8,7 @@ import Quickshell.Services.Notifications
 Scope {
     id: root
 
-    // One notification, drawn the same in a pop-up and in the calendar panel's list: the urgency bar at the left (green, grey for low, red for critical), its picture, the app and how long ago, the title, the text, and the app's own buttons
+    // One notification, drawn the same in a pop-up and in the calendar panel's list: the urgency bar at the left (the accent, grey for low, red for critical), its picture, the app and how long ago, the title, the text, and the app's own buttons
     // A click goes to the app (its own action first, then its window is shown), a right click or the X dismisses it
     component Note: Rectangle {
         id: card

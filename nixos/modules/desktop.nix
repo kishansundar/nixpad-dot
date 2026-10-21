@@ -43,8 +43,7 @@
         '';
         disallowedReferences = (old.disallowedReferences or [ ]) ++ [ prev.rustc.unwrapped ];
       });
-      # Screen-sharing portal with the upstream fix for its crash when RustDesk starts a stream (xdg-desktop-portal-wlr PR #405).
-      # Only for 0.8.4 and older: a newer release should carry the fix and the patch would no longer apply.
+      # Screen-sharing portal with the upstream fix for its crash when RustDesk starts a stream (xdg-desktop-portal-wlr PR #405), only up to 0.8.4: a newer release carries it.
       xdg-desktop-portal-wlr = prev.xdg-desktop-portal-wlr.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ prev.lib.optionals (prev.lib.versionOlder old.version "0.8.5") [ ./xdpw-stale-frame.patch ];
       });

@@ -117,7 +117,7 @@ Singleton {
         path: "/run/tailscale/tailscaled.sock"
         Component.onCompleted: connected = true
         onConnectionStateChanged: { if (connected) { write("GET /localapi/v0/watch-ipn-bus?mask=2 HTTP/1.0\r\nHost: local-tailscaled.sock\r\n\r\n"); flush() } else sys.tailState = "" }
-        parser: SplitParser { onRead: line => { const n = line.startsWith("{") ? JSON.parse(line) : null; if (Number.isInteger(n?.State)) { sys.tailState = sys.tailNames[n.State] ?? ""; tailIp.running = true } } }
+        parser: SplitParser { onRead: line => { try { const n = line.startsWith("{") ? JSON.parse(line) : null; if (Number.isInteger(n?.State)) { sys.tailState = sys.tailNames[n.State] ?? ""; tailIp.running = true } } catch (e) {} } }
     }
     Timer { interval: 10000; running: !tailBus.connected; repeat: true; onTriggered: tailBus.connected = true }
     Process { id: tailIp; command: ["tailscale", "ip", "-4"]; stdout: StdioCollector { onStreamFinished: sys.tailAddress = text.trim() } }
@@ -285,7 +285,7 @@ Singleton {
             sys.cpuThreads = (text().match(/^processor\s*:/gm) ?? []).length
         }
     }
-    // The desktop with the version mango reports ("mango 0.17.5"), and before that answer arrives just its name
+    // The desktop with the version mango reports ("mango 0.18.0"), and before that answer arrives just its name
     property string desktop: Quickshell.env("XDG_CURRENT_DESKTOP") ?? ""
     Process {
         running: true

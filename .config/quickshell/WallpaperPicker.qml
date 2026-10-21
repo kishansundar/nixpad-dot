@@ -235,7 +235,7 @@ Scope {
                         }
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
-                            text: decodeURIComponent(String(root.folder)).replace("file://" + root.home, "~") + (row.count > 0 ? "  ·  " + (row.currentIndex + 1) + " of " + row.count : "")
+                            text: decodeURIComponent(String(root.folder)).replace("file://" + root.home, "~") + (row.count > 0 ? "  /  " + (row.currentIndex + 1) + " OF " + row.count : "")
                             color: Theme.text
                             font: Theme.valueFont
                         }
@@ -399,7 +399,7 @@ Scope {
                     Text {
                         id: caption
                         anchors.centerIn: parent
-                        text: row.currentItem ? row.currentItem.fileName + (row.currentItem.filePath === root.current ? "  ·  in use" : "") : ""
+                        text: row.currentItem ? row.currentItem.fileName + (row.currentItem.filePath === root.current ? "  /  IN USE" : "") : ""
                         color: Theme.text
                         font: Theme.valueFont
                     }

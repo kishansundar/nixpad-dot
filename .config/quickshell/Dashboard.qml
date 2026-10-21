@@ -115,7 +115,7 @@ PanelWindow {
         // The machine: its name in large figures over one line of what it runs, and how long it has been up
         Item {
             width: parent.width; height: 118
-            Ui.Value { id: hostName; x: 16; y: 4; text: Sys.host.toUpperCase(); font: Theme.heroFont }
+            Ui.Value { x: 16; y: 4; text: Sys.host.toUpperCase(); font: Theme.heroFont }
             Ui.Label {
                 x: 16; y: 90
                 width: parent.width - 32
@@ -176,7 +176,7 @@ PanelWindow {
                 bottomPadding: 6
                 Ui.Section { title: "03 / NETWORK" }
                 Ui.Pair { label: "LINK"; value: Sys.link === "OFF" ? "OFFLINE" : Sys.link + " / " + Sys.netName; tint: Sys.link === "OFF" ? Theme.muted : Theme.text }
-                Ui.Pair { label: "TRAFFIC"; value: "↓ " + Sys.rate(Sys.down) + "   ↑ " + Sys.rate(Sys.up) + "   Mbps" }
+                Ui.Pair { label: "TRAFFIC"; value: "↓ " + Sys.rate(Sys.down) + "   ↑ " + Sys.rate(Sys.up) + "   MBPS" }
                 Ui.Switch { label: "TAILSCALE"; on: Sys.tailState === "Running"; note: Sys.tailState === "Running" ? Sys.tailAddress : Sys.tailState === "Stopped" ? "" : Sys.tailWord; onFlipped: Sys.toggleTail() }
                 Item { width: 1; height: 8 }
                 Ui.Section { title: "04 / SCREEN" }

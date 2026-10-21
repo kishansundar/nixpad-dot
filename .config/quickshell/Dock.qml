@@ -276,9 +276,9 @@ Scope {
                 margins {
                     bottom: (dock.hides ? strip.height : 0) + Theme.gap
                     left: {
-                        const edge = dock.side === "left" ? Theme.gap : dock.side === "right" ? screen.width - strip.width - Theme.gap : (screen.width - strip.width) / 2
+                        const edge = dock.side === "left" ? Theme.gap : dock.side === "right" ? place.modelData.width - strip.width - Theme.gap : (place.modelData.width - strip.width) / 2
                         const middle = edge + Theme.thick + (place.menuCell?.x ?? 0) + dock.cell / 2
-                        return Math.round(Math.max(Theme.gap, Math.min(screen.width - width - Theme.gap, middle - width / 2)))
+                        return Math.round(Math.max(Theme.gap, Math.min(place.modelData.width - width - Theme.gap, middle - width / 2)))
                     }
                 }
                 exclusiveZone: 0

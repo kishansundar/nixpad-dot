@@ -5,7 +5,6 @@ prefer = "saturation"
 [templates.mango]
 input_path = "~/.config/matugen/templates/mango-colors.conf"
 output_path = "~/.config/mango/colors.conf"
-post_hook = "mmsg dispatch reload_config || true"
 
 [templates.kitty]
 input_path = "~/.config/matugen/templates/kitty-accent.conf"

@@ -1,21 +1,6 @@
-# ============================================================
-# ~/.config/fish/config.fish
-#
-# NixOS manages:
-#   - Fish
-#   - Starship
-#   - zoxide
-#   - direnv
-#   - fzf.fish
-#   - autopair
-#
-# Keep those integrations OUT of this file.
-# This file is for personal shell behavior.
-# ============================================================
+# Personal shell settings; fish, Starship, zoxide, direnv, fzf.fish and autopair are set up by NixOS (modules/shell.nix), so they stay out of this file.
 
-# ============================================================
-# Environment
-# ============================================================
+# --- Environment ---
 
 set -gx EDITOR nvim
 set -gx VISUAL nvim
@@ -30,22 +15,14 @@ fish_add_path -g ~/.cargo/bin
 set -gx PAGER less
 set -gx LESS '-R -F -X'
 
-# ============================================================
-# Interactive shell
-# ============================================================
+# --- Interactive shell ---
 
 if status is-interactive
 
-    # --------------------------------------------------------
-    # Fish
-    # --------------------------------------------------------
-
-    # Disable the default "Welcome to fish" message.
+    # No "Welcome to fish" message.
     set -g fish_greeting
 
-    # --------------------------------------------------------
-    # Navigation
-    # --------------------------------------------------------
+    # --- Navigation ---
 
     abbr --add .. 'cd ..'
     abbr --add ... 'cd ../..'
@@ -53,9 +30,7 @@ if status is-interactive
 
     abbr --add c clear
 
-    # --------------------------------------------------------
-    # Git
-    # --------------------------------------------------------
+    # --- Git ---
 
     abbr --add g git
 
@@ -92,12 +67,9 @@ if status is-interactive
     abbr --add dot 'git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
     abbr --add dotg 'lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
-    # --------------------------------------------------------
-    # NixOS
-    # --------------------------------------------------------
+    # --- NixOS ---
 
-    # Build the configuration in ~/nixos (/etc/nixos is a link to it) and switch
-    # to it.
+    # Build the configuration in ~/nixos (/etc/nixos is a link to it) and switch to it.
     abbr --add nrs 'sudo nixos-rebuild switch'
     abbr --add nrb 'sudo nixos-rebuild boot'
     abbr --add nrsu 'sudo nixos-rebuild switch --upgrade'
@@ -108,14 +80,11 @@ if status is-interactive
     # Move the nixos channel to its newest revision; nrs then applies it.
     abbr --add nup 'sudo nix-channel --update'
 
-    # Cleanup. ngc removes all old generations (no rollback); ngc7 keeps a week.
-    abbr --add ngc 'sudo nix-collect-garbage -d'
+    # Cleanup: ngc keeps the newest 3 generations (as sysclean and the boot menu do) and removes what nothing uses; ngc7 keeps a week.
+    abbr --add ngc 'sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage'
     abbr --add ngc7 'sudo nix-collect-garbage --delete-older-than 7d'
-    abbr --add nopt 'nix-store --optimise'
 
-    # --------------------------------------------------------
-    # eza
-    # --------------------------------------------------------
+    # --- eza ---
 
     if command -q eza
         abbr --add l 'eza --group-directories-first'
@@ -124,16 +93,7 @@ if status is-interactive
         abbr --add lt 'eza -lah --tree --level=2 --group-directories-first'
     end
 
-    # --------------------------------------------------------
-    # bat
-    # --------------------------------------------------------
-
-    # Keep the normal `cat` command untouched.
-    # Use `bat` explicitly when you want syntax highlighting.
-
-    # --------------------------------------------------------
-    # Useful Fish functions
-    # --------------------------------------------------------
+    # --- Functions ---
 
     # Create a directory and enter it.
     function mkcd
@@ -146,10 +106,7 @@ if status is-interactive
         and cd -- $argv[1]
     end
 
-    # Go up N directories.
-    # Example:
-    #   up
-    #   up 3
+    # Go up N directories (up, up 3).
     function up
         set -l levels 1
 
@@ -233,11 +190,8 @@ if status is-interactive
         end
     end
 
-    # --------------------------------------------------------
-    # Quality-of-life aliases/abbreviations
-    # --------------------------------------------------------
+    # --- Docker, systemd and Zed ---
 
-    # Docker
     if command -q docker
         abbr --add d docker
         abbr --add dc 'docker compose'
@@ -246,67 +200,11 @@ if status is-interactive
         abbr --add di 'docker images'
     end
 
-    # Kubernetes
-    if command -q kubectl
-        abbr --add k kubectl
-        abbr --add kgp 'kubectl get pods'
-        abbr --add kgs 'kubectl get svc'
-        abbr --add kgn 'kubectl get nodes'
-    end
-
-    # --------------------------------------------------------
-    # System shortcuts
-    # --------------------------------------------------------
-
     if command -q systemctl
         abbr --add sc systemctl
         abbr --add scu 'systemctl --user'
     end
 
-    # --------------------------------------------------------
-    # Zed
-    # --------------------------------------------------------
-
     abbr --add zed zeditor
-
-    # --------------------------------------------------------
-    # Search helpers
-    # --------------------------------------------------------
-
-    # fzf.fish is managed by NixOS.
-    #
-    # Keep these tools untouched so fzf.fish can provide its
-    # own Ctrl-R / file / directory / process integrations.
-    #
-    # Useful tools available from your NixOS configuration:
-    #
-    #   fzf
-    #   fd
-    #   bat
-    #   eza
-    #
-    # Do not manually rebind fzf.fish here unless needed.
-
-    # --------------------------------------------------------
-    # Prompt
-    # --------------------------------------------------------
-
-    # Starship is initialized by NixOS.
-    #
-    # DO NOT add:
-    #
-    #   starship init fish | source
-    #
-    # to this file.
-
-    # --------------------------------------------------------
-    # Shell startup message
-    # --------------------------------------------------------
-
-    # Optional: show a small system message only when desired.
-    #
-    # function fish_user_key_bindings
-    #     ...
-    # end
 
 end

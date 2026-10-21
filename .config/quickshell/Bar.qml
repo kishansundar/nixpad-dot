@@ -23,8 +23,8 @@ PanelWindow {
     // The focused window, when it is on this monitor: the one marked active, or, while a picker or a panel holds the keyboard and none is marked, the one mango still names
     readonly property var top: {
         const window = ToplevelManager.activeToplevel
-        if (window) return window.screens.length === 0 || Array.from(window.screens).some(s => s.name === bar.screen.name) ? window : null
-        try { const told = JSON.parse(Sys.focused); return told.monitor === bar.screen.name ? { appId: told.appid, title: told.title } : null } catch (e) { return null }
+        if (window) return window.screens.length === 0 || Array.from(window.screens).some(s => s?.name === bar.screen?.name) ? window : null
+        try { const told = JSON.parse(Sys.focused); return told.monitor === bar.screen?.name ? { appId: told.appid, title: told.title } : null } catch (e) { return null }
     }
     // Its app by the short name ("org.gnome.Nautilus" is shown as NAUTILUS), and its title in two parts: the status sign some programs put first (a terminal's spinner), and the words
     readonly property string appName: (top?.appId ?? "").split(".").pop().toUpperCase()
@@ -354,7 +354,6 @@ PanelWindow {
             }
             // The date as the small label and the time as the value, then a lamp: hollow and grey while nothing waits, filled while notifications wait, cyan while do not disturb is on; a click opens the calendar under it, where the notifications are listed, and a right click switches do not disturb
             Cell {
-                id: clockCell
                 live: true
                 opens: "calendar"
                 label: Qt.formatDateTime(clock.date, "ddd dd MMM").toUpperCase(); value: Qt.formatDateTime(clock.date, "HH:mm")
