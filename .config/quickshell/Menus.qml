@@ -40,6 +40,7 @@ PanelWindow {
         if (Sys.wifiDevice) Sys.wifiDevice.scannerEnabled = kind === "wifi"
         if (adapter?.enabled) adapter.discovering = kind === "bluetooth"
     }
+    Connections { target: menus.adapter; function onEnabledChanged() { if (menus.adapter.enabled && menus.kind === "bluetooth") menus.adapter.discovering = true } }
 
     // Each list is rows: a label, a value at the right, a square that is filled for the one in use (or lit for one that is up), and what a click does (a row without that only shows something; a row with only a section is a heading, a row with a rule has a line above it); a row that can be forgotten also carries what a right click does, and is drawn red while it asks
     readonly property var rows: kind === "wifi" ? wifiRows() : kind === "bluetooth" ? bluetoothRows() : kind === "audio" ? audioRows() : kind === "tray" ? trayRows() : []

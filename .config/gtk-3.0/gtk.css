@@ -1,8 +1,8 @@
 /* Colours for GTK apps and file dialogs: the fixed palette of ~/.config/quickshell/Theme.qml plus the accent matugen takes from the wallpaper; matugen writes gtk-3.0/gtk.css and gtk-4.0/gtk.css in ~/.config from ~/.config/matugen/templates/gtk-colors.css at each wallpaper change, so changes belong in that template */
 
-@define-color accent_color #ff4da3;
+@define-color accent_color #8d57ff;
 @define-color accent_fg_color #0B0D1A;
-@define-color accent_bg_color #ff4da3;
+@define-color accent_bg_color #8d57ff;
 @define-color window_bg_color #0B0D1A;
 @define-color window_fg_color #F4E8D0;
 @define-color headerbar_bg_color #101226;

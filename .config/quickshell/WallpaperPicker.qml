@@ -16,7 +16,7 @@ Scope {
     readonly property string home: Quickshell.env("HOME")
     // Small copies of the pictures are kept here, because decoding a large wallpaper takes up to a second
     readonly property string thumbDir: home + "/.cache/wallpaper/thumbs"
-    readonly property url topFolder: "file://" + home + "/Pictures"
+    readonly property url topFolder: "file://" + home + "/Pictures/Wallpapers"
     readonly property int thumbWidth: 640
     // The folder on show; kept while the bar runs, so the picker reopens where it was left
     property url folder: ""
@@ -210,7 +210,7 @@ Scope {
                     anchors.horizontalCenterOffset: root.slant * (y + height / 2 - parent.height / 2)
                     height: 30
                     color: Theme.bg
-                    border { width: 2; color: Theme.accent }
+                    border { width: Theme.thick; color: Theme.accent }
                     // Clicks on a label box stay with it and do not close the picker
                     MouseArea { anchors.fill: parent }
                 }
@@ -295,7 +295,7 @@ Scope {
                             ClippingRectangle {
                                 anchors.fill: parent
                                 color: Theme.surface
-                                border.width: cell.marked ? 2 : cardMouse.containsMouse ? 1 : 0
+                                border.width: cell.marked ? Theme.thick : cardMouse.containsMouse ? Theme.thin : 0
                                 border.color: Theme.accent
 
                                 // A folder: its icon, and its name while marked, leaned back so they stand upright

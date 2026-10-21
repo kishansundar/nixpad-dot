@@ -26,7 +26,7 @@ PanelWindow {
     readonly property string phaseText: phase === UPowerDeviceState.Charging ? "CHARGING" : phase === UPowerDeviceState.Discharging ? "ON BATTERY" : phase === UPowerDeviceState.FullyCharged ? "FULL" : phase === UPowerDeviceState.PendingCharge ? "ON MAINS" : UPowerDeviceState.toString(phase).toUpperCase()
     // Seconds until it is full (while charging) or empty; 0 while UPower cannot tell yet
     readonly property real remaining: Sys.charging ? (summary?.timeToFull ?? 0) : (summary?.timeToEmpty ?? 0)
-    // The level's colour: acid green, amber from 30% down, red from 15% down, as in the bar
+    // The level's colour: the second colour, then amber from 30% down and red from 15% down, the same steps as the bar
     readonly property color levelColor: Sys.charging ? Theme.accent2 : Sys.charge <= 15 ? Theme.error : Sys.charge <= 30 ? Theme.warn : Theme.accent2
 
     // Charge cycles: UPower does not report them but the kernel does, so its file is read each time the panel opens

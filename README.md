@@ -31,7 +31,7 @@ where they belong in the home folder. The `dot` command (a fish abbreviation) is
 ## What is not in here
 
 Browser profiles, 1Password, SSH keys, Syncthing and RustDesk identities,
-Obsidian, Spotify, the other wallpapers in `~/Pictures/Backgrounds`, and all
+Obsidian, Spotify, the other wallpapers in `~/Pictures/Wallpapers`, and all
 personal folders. Wi-Fi passwords, Bluetooth pairings, fingerprints and the
 Tailscale login live outside the home folder. Back these up separately, or set
 them up again (see "After the first login").
@@ -96,7 +96,7 @@ A copy only on this laptop is lost with the laptop.
 | RustDesk | gets a new ID |
 | Neovim | plugins install by themselves on the first start |
 | SSH | restore `~/.ssh` from a backup, or make a new key and add it to GitHub; then `dot remote set-url origin git@github.com:kishansundar/nixpad-dot.git` so `dot push` works again (an HTTPS clone can only download) |
-| Wallpapers | only the one in use is here; copy `~/Pictures/Backgrounds` back for the rest |
+| Wallpapers | only the one in use is here; copy `~/Pictures/Wallpapers` back for the rest |
 
 ## Handy commands
 
