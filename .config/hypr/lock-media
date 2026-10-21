@@ -6,9 +6,9 @@ cache="${XDG_CACHE_HOME:-$HOME/.cache}/lock-media"
 start="$HOME/.config/hypr/hyprlock-cover.conf"
 sep=$(printf '\037')   # between the fields; a character no title has
 
-# That player's state, name, title, artist and cover, asked once; title and artist cut to a line, with & and < escaped because hyprlock reads labels as markup.
-IFS=$sep read -r state player title artist art <<EOF
-$(playerctl -a metadata --format "{{status}}$sep{{playerName}}$sep{{title}}$sep{{artist}}$sep{{mpris:artUrl}}" 2>/dev/null | awk -F"$sep" -v OFS="$sep" '
+# That player's state, name, title, artist, cover and address, asked once; title and artist cut to a line, with & and < escaped because hyprlock reads labels as markup.
+IFS=$sep read -r state player title artist art url <<EOF
+$(playerctl -a metadata --format "{{status}}$sep{{playerName}}$sep{{title}}$sep{{artist}}$sep{{mpris:artUrl}}$sep{{xesam:url}}" 2>/dev/null | awk -F"$sep" -v OFS="$sep" '
     function tidy(text) {
         text = substr(text, 1, 60)
         gsub(/&/, "\\&amp;", text); gsub(/</, "\\&lt;", text); gsub(/>/, "\\&gt;", text)
@@ -19,6 +19,9 @@ $(playerctl -a metadata --format "{{status}}$sep{{playerName}}$sep{{title}}$sep{
     $1 == "Paused" && !paused { paused = $0 }
     END { if (!found && paused) print paused }')
 EOF
+
+# A local file without a title of its own goes by its file name, as in the bar.
+if [ -z "$title" ] && [ "${url#file://}" != "$url" ]; then title=$(printf '%b' "$(printf '%s' "${url##*/}" | sed 's/\\/\\\\/g; s/%\([0-9A-Fa-f][0-9A-Fa-f]\)/\\x\1/g')" | awk '{ t = substr($0, 1, 60); gsub(/&/, "\\&amp;", t); gsub(/</, "\\&lt;", t); gsub(/>/, "\\&gt;", t); print t }'); fi
 
 # The cover's path; one from the web is fetched once and again only when its address changes ($1: how many seconds the fetch may take).
 cover() {

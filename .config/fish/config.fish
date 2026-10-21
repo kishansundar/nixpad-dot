@@ -80,9 +80,8 @@ if status is-interactive
     # Move the nixos channel to its newest revision; nrs then applies it.
     abbr --add nup 'sudo nix-channel --update'
 
-    # Cleanup: ngc keeps the newest 3 generations (as sysclean and the boot menu do) and removes what nothing uses; ngc7 keeps a week.
+    # Cleanup: ngc keeps the newest 3 generations (as sysclean and the boot menu do) and removes what nothing uses.
     abbr --add ngc 'sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage'
-    abbr --add ngc7 'sudo nix-collect-garbage --delete-older-than 7d'
 
     # --- eza ---
 

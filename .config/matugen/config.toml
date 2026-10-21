@@ -36,3 +36,8 @@ output_path = "~/.config/yazi/theme.toml"
 [templates.btop]
 input_path = "~/.config/matugen/templates/btop.theme"
 output_path = "~/.config/btop/themes/nix.theme"
+
+# qimgv in the desktop's palette, its accent from the wallpaper; the file has no comment because qimgv reads and rewrites it as plain settings.
+[templates.qimgv]
+input_path = "~/.config/matugen/templates/qimgv-theme.conf"
+output_path = "~/.config/qimgv/theme.conf"
