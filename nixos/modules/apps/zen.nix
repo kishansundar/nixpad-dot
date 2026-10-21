@@ -24,7 +24,7 @@ let
     }:
 
     let
-      version = "1.23.3b";
+      version = "1.23.4b";
 
       # Zen's own updater can't work in the Nix store; change version and hash to update.
       policiesJson = writeText "zen-policies.json" (
@@ -39,7 +39,7 @@ let
         # Official build; ../../update-packages.sh writes the newest version and hash.
         src = fetchurl {
           url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.linux-x86_64.tar.xz";
-          hash = "sha256-uyBF0+IWVNQP6EElAJLurf0sH8gx7vtQkiJ3PIvcoUk=";
+          hash = "sha256-uoHdcK9w1kXy8KaS9/pFEPgZKQq/2NjmAnPT1aYNBTY=";
         };
 
         nativeBuildInputs = [
@@ -104,7 +104,7 @@ let
       };
     in
     # Adds launcher, icons and media libraries; the wrapper is shown the Gecko version (MaxVersion in the build's application.ini), which ../../update-packages.sh writes with each new Zen.
-    wrapFirefox (unwrapped // { version = "158.0"; }) { inherit version; }
+    wrapFirefox (unwrapped // { version = "158.0.1"; }) { inherit version; }
   ) { };
 in
 {
