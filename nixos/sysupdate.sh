@@ -1,5 +1,5 @@
 #!/bin/sh
-# Updates this machine: the NixOS channel, Zen, Helium and the Libron font (update-browsers.sh), then builds, switches and cleans up. The clean-up keeps the newest 3 generations, so you can still boot back.
+# Updates this machine: the NixOS channel, Zen, Helium and the Libron font (update-packages.sh), then builds, switches and cleans up. The clean-up keeps the newest 3 generations, so you can still boot back.
 set -eu
 before=$(nixos-version)
 
@@ -7,12 +7,12 @@ echo "== NixOS channel"
 sudo nix-channel --update
 
 echo "== Zen, Helium and Libron"
-bash /etc/nixos/update-browsers.sh
+bash /etc/nixos/update-packages.sh
 
 echo "== Build and switch"
 sudo nixos-rebuild switch
 
-# Clean-up after the update; it also removes the browser archives update-browsers.sh put into the Nix store, which only the build needed.
+# Clean-up after the update; it also removes the archives update-packages.sh put into the Nix store, which only the build needed.
 sysclean go
 
 echo "== Done: $before -> $(nixos-version)"

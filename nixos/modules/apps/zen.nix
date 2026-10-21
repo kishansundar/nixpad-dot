@@ -36,7 +36,7 @@ let
         pname = "zen-unwrapped";
         inherit version;
 
-        # Official build; ../../update-browsers.sh writes the newest version and hash.
+        # Official build; ../../update-packages.sh writes the newest version and hash.
         src = fetchurl {
           url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.linux-x86_64.tar.xz";
           hash = "sha256-uyBF0+IWVNQP6EElAJLurf0sH8gx7vtQkiJ3PIvcoUk=";
@@ -103,8 +103,8 @@ let
         };
       };
     in
-    # Adds launcher, icons and media libraries; the wrapper is shown the Gecko version (156).
-    wrapFirefox (unwrapped // { version = "156.0"; }) { inherit version; }
+    # Adds launcher, icons and media libraries; the wrapper is shown the Gecko version (158, MaxVersion in the build's application.ini; check it at each Zen update).
+    wrapFirefox (unwrapped // { version = "158.0"; }) { inherit version; }
   ) { };
 in
 {

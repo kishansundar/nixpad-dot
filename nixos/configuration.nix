@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ config, lib, ... }:
 
 # This machine: the files it is built from, and its own settings.
 {
@@ -60,6 +60,12 @@
       "spotify"
       "obsidian"
     ];
+
+  # The nixpkgs version this system is built from, written to ~/nixos/nixpkgs-revision at each switch so the repo records it (the README's reinstall step can build from it again).
+  system.activationScripts.nixpkgsRevision.text = ''
+    f=/home/kishan/nixos/nixpkgs-revision
+    if [ -d /home/kishan/nixos ] && [ "$(cat "$f" 2>/dev/null)" != "${toString config.system.nixos.revision}" ]; then echo "${toString config.system.nixos.revision}" > "$f"; chown kishan:users "$f"; fi
+  '';
 
   # The NixOS release first installed; it stays the same across upgrades.
   system.stateVersion = "26.05";

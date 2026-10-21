@@ -16,7 +16,7 @@ in
     swaybg              # draws the wallpaper
     matugen             # Material You colors from the wallpaper or a seed color
     adw-gtk3            # GTK3 theme that takes the generated colors
-    papirus-icon-theme  # icons for GTK apps
+    (papirus-icon-theme.override { color = "violet"; })  # icons for GTK apps and the bar, folders in the theme's violet (papirus-folders at build time)
     cursorPackage
   ];
 

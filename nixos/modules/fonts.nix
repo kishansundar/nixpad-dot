@@ -2,7 +2,7 @@
 
 # Fonts: which are installed, and which each kind of text uses by default.
 let
-  # Libron serif font, packaged from github.com/nicoverbruggen/libron (not in nixpkgs); ../update-browsers.sh writes the newest version and hash.
+  # Libron serif font, packaged from github.com/nicoverbruggen/libron (not in nixpkgs); ../update-packages.sh writes the newest version and hash.
   libron = pkgs.callPackage (
     {
       lib,

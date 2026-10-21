@@ -76,6 +76,8 @@ A copy only on this laptop is lost with the laptop.
    `sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos && sudo nix-channel --update`
 7. Build and switch, then reboot:
    `sudo nixos-rebuild switch && reboot`
+   To build from the exact nixpkgs the repo last ran (in case unstable broke something since), use instead:
+   `sudo nixos-rebuild switch -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/$(cat ~/nixos/nixpkgs-revision).tar.gz && reboot`
 8. Save the new disk file:
    `dot add -u && dot commit -m "New hardware configuration"`
 
