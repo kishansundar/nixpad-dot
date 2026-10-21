@@ -293,6 +293,21 @@ Singleton {
         stdout: StdioCollector { onStreamFinished: { try { sys.desktop = "mango " + JSON.parse(text).version.replace(/\(.*\)/, "") } catch (e) {} } }
     }
     FileView { path: "/proc/uptime"; onLoaded: sys.bootedAt = Date.now() / 1000 - Number(text().split(" ")[0]) }
+    // A reboot is due when the newest built system has another kernel, initrd or kernel modules than the booted one (the rule of NixOS's own auto-upgrade), so an nrs or nrb shows within a minute; rebootWhy says which
+    property string rebootWhy: ""
+    readonly property bool rebootDue: rebootWhy !== ""
+    Process {
+        id: rebootCheck
+        running: true
+        command: ["readlink", "/run/booted-system/kernel", "/run/booted-system/initrd", "/run/booted-system/kernel-modules", "/nix/var/nix/profiles/system/kernel", "/nix/var/nix/profiles/system/initrd", "/nix/var/nix/profiles/system/kernel-modules"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const l = text.trim().split("\n")
+                if (l.length === 6) sys.rebootWhy = l[0] !== l[3] ? "NEW KERNEL " + (l[3].match(/linux-([\d.]+)/)?.[1] ?? "") : l[1] !== l[4] ? "NEW INITRD" : l[2] !== l[5] ? "NEW KERNEL MODULES" : ""
+            }
+        }
+    }
+    Timer { interval: 60000; running: true; repeat: true; onTriggered: rebootCheck.running = true }
 
     // --- Timing and number formats ---
 

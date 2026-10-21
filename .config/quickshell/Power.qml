@@ -55,7 +55,7 @@ PanelWindow {
         x: Theme.thick; y: Theme.thick
         width: row.width + 16
 
-        Ui.Head { title: "NIX / POWER"; kana: "電源"; note: "SUPER+ESC" }
+        Ui.Head { title: "NIX / POWER"; kana: "電源"; note: Sys.rebootDue ? "REBOOT DUE: " + Sys.rebootWhy : "SUPER+ESC" }
         Ui.Line { width: parent.width }
         Item { width: 1; height: 8 }
         Row {
@@ -84,6 +84,8 @@ PanelWindow {
                         Ui.Label { anchors.horizontalCenter: parent.horizontalCenter; text: tile.asked ? "CONFIRM?" : tile.modelData.label; color: tile.asked ? Theme.error : tile.chosen ? Theme.text : Theme.text2 }
                     }
                     Rectangle { visible: tile.asked; anchors.bottom: parent.bottom; width: Math.round(parent.width * power.armed); height: 4; color: Theme.error }
+                    // The bar's reboot lamp, repeated on the RESTART tile while a reboot is due
+                    Rectangle { visible: Sys.rebootDue && tile.modelData.label === "RESTART"; x: parent.width - 16; y: 8; width: 8; height: 8; color: Theme.warn }
                     HoverHandler { id: over; cursorShape: Qt.PointingHandCursor }
                     TapHandler { onTapped: power.pick(tile.index) }
                 }

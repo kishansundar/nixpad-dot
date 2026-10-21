@@ -1,27 +1,27 @@
 # Colours for yazi: the fixed palette of ~/.config/quickshell/Theme.qml plus the accent matugen takes from the wallpaper; matugen writes ~/.config/yazi/theme.toml from ~/.config/matugen/templates/yazi-theme.toml at each wallpaper change, so changes belong in that template
 
 [mgr]
-cwd          = { fg = "#794dff" }
+cwd          = { fg = "#4d57ff" }
 border_style = { fg = "#39344F" }
 
 [tabs]
-active   = { fg = "#0B0D1A", bg = "#794dff", bold = true }
-inactive = { fg = "#794dff", bg = "#292044" }
+active   = { fg = "#0B0D1A", bg = "#4d57ff", bold = true }
+inactive = { fg = "#4d57ff", bg = "#292044" }
 # Square ends, like every other shape on the desktop (yazi's own separators are rounded): here for the tabs, and below for the selected row ([indicator]) and the status bar ([status])
 sep_inner = { open = "█", close = "█" }
 sep_outer = { open = "", close = "" }
 
 [mode]
-normal_main = { fg = "#0B0D1A", bg = "#794dff", bold = true }
-normal_alt  = { fg = "#794dff", bg = "#292044" }
+normal_main = { fg = "#0B0D1A", bg = "#4d57ff", bold = true }
+normal_alt  = { fg = "#4d57ff", bg = "#292044" }
 select_main = { fg = "black", bg = "yellow", bold = true }
 select_alt  = { fg = "yellow", bg = "#292044" }
 unset_main  = { fg = "black", bg = "red", bold = true }
 unset_alt   = { fg = "red", bg = "#292044" }
 
 [indicator]
-parent  = { fg = "#0B0D1A", bg = "#794dff" }
-current = { fg = "#0B0D1A", bg = "#794dff" }
+parent  = { fg = "#0B0D1A", bg = "#4d57ff" }
+current = { fg = "#0B0D1A", bg = "#4d57ff" }
 padding = { open = "█", close = "█" }
 
 [status]
@@ -29,31 +29,31 @@ sep_left  = { open = "█", close = "█" }
 sep_right = { open = "█", close = "█" }
 
 [which]
-border = { fg = "#794dff" }
+border = { fg = "#4d57ff" }
 
 [confirm]
-border = { fg = "#794dff" }
-title  = { fg = "#794dff" }
+border = { fg = "#4d57ff" }
+title  = { fg = "#4d57ff" }
 
 [spot]
-border  = { fg = "#794dff" }
-title   = { fg = "#794dff" }
-tbl_col = { fg = "#794dff" }
+border  = { fg = "#4d57ff" }
+title   = { fg = "#4d57ff" }
+tbl_col = { fg = "#4d57ff" }
 
 [pick]
-border = { fg = "#794dff" }
+border = { fg = "#4d57ff" }
 
 [input]
-border = { fg = "#794dff" }
+border = { fg = "#4d57ff" }
 
 [cmp]
-border = { fg = "#794dff" }
+border = { fg = "#4d57ff" }
 
 [tasks]
-border = { fg = "#794dff" }
+border = { fg = "#4d57ff" }
 
 [help]
-border = { fg = "#794dff" }
+border = { fg = "#4d57ff" }
 
 # Yazi's own rules with one change: the last line colours folders with the accent, not blue.
 [filetype]
@@ -67,5 +67,5 @@ rules = [
 	{ url = "*", is = "exec", fg = "green" },
 	{ url = "*", is = "dummy", bg = "red" },
 	{ url = "*/", is = "dummy", bg = "red" },
-	{ url = "*/", fg = "#794dff" },
+	{ url = "*/", fg = "#4d57ff" },
 ]

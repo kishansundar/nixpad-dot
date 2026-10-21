@@ -31,6 +31,8 @@
     fastfetch
     fetch               # animated 3D version of fastfetch
     btop                # system monitor (colours from matugen, ~/.config/btop/themes)
+    pciutils            # lspci: lists the parts inside (graphics, Wi-Fi, SSD)
+    usbutils            # lsusb: lists what is plugged into USB
 
     fishPlugins.fzf-fish
     fishPlugins.autopair

@@ -33,7 +33,7 @@ Singleton {
     readonly property color info: "#54E7F2"
     // The second colour is the other signature colour of the theme: cyan beside an accent from the magenta half of the range (purple to pink), magenta beside one from the cyan half (cyan to blue)
     readonly property color accent2: accent.hslHue * 360 < 257 ? magenta : info
-    // The theme's own magenta, and its violet: the night light's colour and the foot of the dashboard's sun
+    // The theme's own magenta, and its violet, the night light's colour
     readonly property color magenta: "#FF4FA3"
     readonly property color night: "#B58CFF"
 

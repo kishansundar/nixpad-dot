@@ -115,18 +115,6 @@ PanelWindow {
         // The machine: its name in large figures over one line of what it runs, and how long it has been up
         Item {
             width: parent.width; height: 118
-            // The setting sun of the record sleeves, on the line the machine's details stand under: orange through magenta to violet, whatever the wallpaper, cut by bands that widen downward
-            Item {
-                x: hostName.x + hostName.width + 56; y: 6
-                visible: x + width < parent.width - 220
-                width: 132; height: 78
-                clip: true
-                Rectangle {
-                    width: 132; height: 132; radius: 66
-                    gradient: Gradient { GradientStop { position: 0; color: Theme.warn } GradientStop { position: 0.34; color: Theme.magenta } GradientStop { position: 0.62; color: Theme.night } }
-                    Repeater { model: 5; Rectangle { required property int index; y: 34 + index * 10; width: parent.width; height: 2 + index; color: Theme.bg } }
-                }
-            }
             Ui.Value { id: hostName; x: 16; y: 4; text: Sys.host.toUpperCase(); font: Theme.heroFont }
             Ui.Label {
                 x: 16; y: 90

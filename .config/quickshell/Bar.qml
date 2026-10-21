@@ -362,6 +362,15 @@ PanelWindow {
                 onClicked: mouse => { if (mouse.button === Qt.RightButton) Notify.dnd = !Notify.dnd; else Panels.toggle("calendar", bar.screen) }
                 Rectangle { anchors.verticalCenter: parent.verticalCenter; width: 8; height: 8; color: Notify.count > 0 ? (Notify.dnd ? Theme.info : Theme.accent) : "transparent"; border { width: Theme.thin; color: Notify.dnd ? Theme.info : Notify.count > 0 ? Theme.accent : Theme.strong } }
             }
+            // Power, the last cell: PWR and a lamp, hollow and grey while nothing waits, orange while a reboot is due; a click opens the power panel, a right click locks the screen
+            Cell {
+                live: true
+                opens: "power"
+                label: "PWR"
+                tip: (Sys.rebootDue ? "REBOOT DUE: " + Sys.rebootWhy : "NO REBOOT DUE") + "  /  CLICK: POWER PANEL  /  RIGHT CLICK: LOCK"
+                onClicked: mouse => { if (mouse.button === Qt.RightButton) Quickshell.execDetached(["loginctl", "lock-session"]); else Panels.toggle("power", bar.screen) }
+                Rectangle { anchors.verticalCenter: parent.verticalCenter; width: 8; height: 8; color: Sys.rebootDue ? Theme.warn : "transparent"; border { width: Theme.thin; color: Sys.rebootDue ? Theme.warn : Theme.strong } }
+            }
         }
     }
 }
