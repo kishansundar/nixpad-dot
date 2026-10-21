@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 # What the desktop runs: mango, the login screen, locking and the keyring.
 {
@@ -6,6 +6,9 @@
 
   # mango is the desktop (~/.config/mango); its autostart.sh starts the rest of the session.
   programs.mango.enable = true;
+
+  # Screen-saver blocking: nixpkgs' mango module hands it to the gtk portal, which cannot do it without GNOME ("Inhibiting other than idle not supported", 42 times in a week); none, as in mango's own portals.conf, so apps use hypridle's org.freedesktop.ScreenSaver or Wayland's idle inhibit.
+  xdg.portal.config.mango."org.freedesktop.impl.portal.Inhibit" = lib.mkForce [ "none" ];
 
   # RustDesk background service as its own Linux packages install it: runs as root for mouse and keys, starts RustDesk in the mango session.
   systemd.services.rustdesk = {

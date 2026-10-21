@@ -6,7 +6,8 @@
   # Docker starts the first time it is used, not at boot (there it made the start wait for the network).
   virtualisation.docker.enableOnBoot = false;
 
-  users.users."kishan".extraGroups = [ "docker" "dialout" ];
+  # Not in the docker group, which would be root without a password; use sudo docker.
+  users.users."kishan".extraGroups = [ "dialout" ];
 
   environment.systemPackages = with pkgs; [
     lua5_4

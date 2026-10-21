@@ -22,6 +22,8 @@
 
   # Wi-Fi and Ethernet. Use nmtui or nmcli to connect.
   networking.networkmanager.enable = true;
+  # No Wi-Fi power saving: with it on, the MT7921 answered the router in 2 to 134 ms instead of a steady few (Kratos had the same, its audit NET-01).
+  networking.networkmanager.wifi.powersave = false;
   services.tailscale.enable = true;
   # Lets kishan start and stop Tailscale without sudo (the dashboard's TAILSCALE switch)
   services.tailscale.extraSetFlags = [ "--operator=kishan" ];

@@ -7,7 +7,8 @@ echo "== NixOS channel"
 sudo nix-channel --update
 
 echo "== Zen, Helium and Libron"
-bash /etc/nixos/update-packages.sh
+# Not fatal: a GitHub hiccup (60 requests an hour without a token) would otherwise stop the whole update here.
+bash /etc/nixos/update-packages.sh || echo "== Zen, Helium and Libron not updated (see above); the system update goes on"
 
 echo "== Build and switch"
 sudo nixos-rebuild switch
