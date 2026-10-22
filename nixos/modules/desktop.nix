@@ -100,9 +100,8 @@
   # hyprlock asks for the fingerprint itself, so PAM must not ask for it too.
   security.pam.services.hyprlock.fprintAuth = false;
 
-  # Login: check a typed password before asking for a fingerprint.
-  security.pam.services.login.rules.auth.fprintd.order =
-    config.security.pam.services.login.rules.auth.unix.order + 50;
+  # Login (ly): password only, so a wrong one is told at once instead of after 30 s waiting for a finger; a finger login could not unlock the keyring anyway.
+  security.pam.services.login.fprintAuth = false;
 
   # sudo: wait 10 s for a finger (the minimum) before asking for the password.
   security.pam.services.sudo.rules.auth.fprintd.settings.timeout = 10;
