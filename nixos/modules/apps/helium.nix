@@ -43,12 +43,12 @@ let
 
     stdenv.mkDerivation (finalAttrs: {
       pname = "helium";
-      version = "0.19.4.1";
+      version = "0.20.1.1";
 
       # Official build; ../../update-packages.sh writes the newest version and hash.
       src = fetchurl {
         url = "https://github.com/imputnet/helium-linux/releases/download/${finalAttrs.version}/helium-${finalAttrs.version}-x86_64_linux.tar.xz";
-        hash = "sha256-bKbkoA/vWRaCH7GvipYHzGs4b2eKfrQi5V8ZEWujBGk=";
+        hash = "sha256-ICP6RM76D70+GQcch+kNYSdfCLqPW0jVjCNSFVZem1M=";
       };
 
       nativeBuildInputs = [
