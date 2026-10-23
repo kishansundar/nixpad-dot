@@ -297,6 +297,19 @@ PanelWindow {
                 }
                 MouseArea { id: levelsOver; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onContainsMouseChanged: bar.rest(levels, containsMouse); onClicked: { bar.rest(levels, false); Panels.toggle("dashboard", bar.screen) } }
             }
+            // The running cat, RunCat's as the Waycat font draws it (fonts.nix): asleep and still while the processor is under 10 % busy, then a stride of five frames in 250 + 850 × (1 − load)² ms, GNOME RunCat's pace, so 4.5 to 20 frames a second; a click opens the dashboard
+            Cell {
+                id: cat
+                readonly property bool awake: Sys.cpu >= 10
+                property int frame: 0
+                visible: Qt.fontFamilies().includes("Waycat")
+                live: true
+                opens: "dashboard"
+                tip: "PROCESSOR " + Sys.cpu + "%  /  CLICK: DASHBOARD"
+                onClicked: Panels.toggle("dashboard", bar.screen)
+                Text { anchors.verticalCenter: parent.verticalCenter; font { family: "Waycat"; pixelSize: 26 } color: Theme.accent2; text: cat.awake ? "ABCDE"[cat.frame] : "J" }
+                Timer { running: cat.awake && cat.visible; repeat: true; interval: Math.ceil((250 + 850 * Math.pow(1 - Sys.cpu / 100, 2)) / 5); onTriggered: cat.frame = (cat.frame + 1) % 5 }
+            }
             Cell {
                 visible: Sys.temp >= 0
                 label: "TMP"; value: Sys.temp + "°C"; tint: Sys.tempColor

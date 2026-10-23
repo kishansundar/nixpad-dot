@@ -320,13 +320,13 @@ Singleton {
 
     // --- Timing and number formats ---
 
-    // Every 3 seconds: the temperature always (every bar shows it); processor, memory and traffic only while something shows them, which is a bar wide enough for their cells or the open dashboard
+    // Every 3 seconds: the temperature and the processor always (every bar shows them, the processor as the running cat); memory and traffic only while something shows them, which is a bar wide enough for their cells or the open dashboard
     readonly property bool watched: Panels.open === "dashboard" || Quickshell.screens.some(s => s.width >= Theme.wide)
     function read() { cpuFile.reload(); ramFile.reload(); netFile.reload() }
     onWatchedChanged: if (watched) read()
     Timer {
         interval: 3000; running: true; repeat: true
-        onTriggered: { if (tempFile.path) tempFile.reload(); if (sys.watched) sys.read() }
+        onTriggered: { if (tempFile.path) tempFile.reload(); if (sys.watched) sys.read(); else cpuFile.reload() }
     }
 
     // 7 as "07"; bytes per second as megabits per second in three digits, "4.8", "19.0" or "332" (the unit is written once, after both numbers); seconds as "07:05:19"; KiB as "512 MiB" or "2.1 GiB"

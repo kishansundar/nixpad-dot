@@ -34,6 +34,14 @@ let
       };
     })
   ) { };
+
+  # The bar's running cat (Waycat, github.com/CarloCattano/waycat: RunCat's cat as a font); its repo states no licence, so it is fetched at a fixed commit and not kept in this repo.
+  waycat = pkgs.runCommand "waycat-font" { } ''
+    install -Dm644 ${pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/CarloCattano/waycat/423a59c29accc0f73cf0f35cf2f823081fa26184/fonts/Waycat.ttf";
+      hash = "sha256-W7otvv+Dho/Nz9Jk6ehDZLhreH8/33Vc96AgCic/ZD8=";
+    }} $out/share/fonts/truetype/Waycat.ttf
+  '';
 in
 {
   # A basic set covering most languages and emoji, so no text shows as empty boxes.
@@ -50,6 +58,9 @@ in
 
     # Reading text. Packaged above.
     libron
+
+    # The bar's running cat. Packaged above.
+    waycat
   ];
 
   # What an app gets when it asks for "serif", "sans-serif" or "monospace".
